@@ -35,8 +35,8 @@ const userLoginValidator = ()=>{
   
         body('email')
         .trim()
-        .isEmail().withMessage("Email is Invalid")
-        .isEmpty().withMessage("Email is required"),
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Email is Invalid"),
 
         body('password')
         .notEmpty().withMessage("Password cannot be empty")

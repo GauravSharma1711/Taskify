@@ -33,7 +33,7 @@ email:{
    trim:true,
    
 },
-fullname:{
+fullName:{
    type:String,
    required:true,
 },

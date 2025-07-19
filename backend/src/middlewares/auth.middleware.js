@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken'
  export const protectRoute = async(req,res,next)=>{
 
    try {
-     const {accessToken} = req.cookies
+     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
  
-     if(!accessToken){
+     if(!token){
          return res.status(404).json({error:"AccessToken missing"});
      }
  
-     const decoded = await jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET);
+     const decoded =  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
  
         if(!decoded){
          throw new ApiError(403,"Unauthorized")

@@ -1,6 +1,6 @@
 import express from 'express'
-import { changeCurrentPassword, forgotPasswordRequest, getCurrentUser, loginUser, logoutUser, refreshAccessToken, registerUser, resendEmailVerification } from '../controllers/auth.controller.js';
-import {validate} from '../middlewares/validatr.middleware.js'
+import { changeCurrentPassword, forgotPasswordRequest, getCurrentUser, loginUser, logoutUser, refreshAccessToken, registerUser, resendEmailVerification, resetForgotPassword, verifyEmail } from '../controllers/auth.controller.js';
+import {validate} from '../middlewares/validator.middleware.js'
 import {userLoginValidator, userRegistrationValidator } from '../validators/auth.js'
 
 import {protectRoute} from '../middlewares/auth.middleware.js'
@@ -11,9 +11,15 @@ router.post('/register',userRegistrationValidator(),validate,registerUser);
 router.post('/login',userLoginValidator(),validate,loginUser);
 router.delete('/logout',protectRoute,logoutUser);
 
+router.get('/verify/:unhashedToken', verifyEmail);
+
+
 router.post('/resendEmailVerification',protectRoute,resendEmailVerification);
-router.post('/refreshToken',refreshAccessToken);
+
+router.post('/refreshAccessToken',refreshAccessToken);
+
 router.post('/forgotPassword',forgotPasswordRequest);
+router.post('/resetPassword/:unhashedToken',resetForgotPassword);
 
 router.post('/changeCurrentPassword',protectRoute,changeCurrentPassword);
 

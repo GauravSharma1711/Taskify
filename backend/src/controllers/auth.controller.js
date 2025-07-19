@@ -37,7 +37,7 @@ const registerUser = async(req,res)=>{
    sendMail({
    email:user.email,
    subject:"verify email account",
-   mailgenContent:emailVerificationMailGenContent(
+   mailGenContent:emailVerificationMailGenContent(
     username,
     verificationUrl
    )
@@ -95,26 +95,31 @@ return res.status(500).json({ error: "Internal server error" });
 
 const logoutUser = async (req, res) => {
  
- const user = await User.findById(req.user.id);
+try {
+   const user = await User.findById(req.user.id);
+  
+  
+    if(user){
+  user.refreshToken = null;
+  await user.save();
+    }
+  
+       res.clearCookie("accessToken",{
+          httpOnly: true,
+      sameSite: "Strict",
+      })
+  
+      res.clearCookie("refreshToken", {
+          httpOnly: true,
+          sameSite: "Strict",
+        });
+  
+    return res.status(200).json({message:"User logged out successfully"});
 
-
-  if(user){
-user.refreshToken = null;
-await user.save();
-  }
-
-     res.clearCookie("accessToken",{
-        httpOnly: true,
-    sameSite: "Strict",
-    })
-
-    res.clearCookie("refreshToken", {
-        httpOnly: true,
-        sameSite: "Strict",
-      });
-
-
-  return res.status(200).json({message:"User logged out successfully"});
+} catch (error) {
+  console.log("error in logout controller",error);
+  res.status(500).json({error:"Internal server error"});
+}
   
 };
 
@@ -143,7 +148,6 @@ const verifyEmail = async (req, res) => {
      return res.status(200).json({message:"User verified successfully"});
 
 };
-
 
 
 
@@ -196,7 +200,7 @@ const refreshAccessToken = async (req, res) => {
      }
 
      try {
-      const decoded = await jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET);
+      const decoded =  jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET);
  
       if(!decoded){
        return res.status(403).json({error:"Invalid refresh token"});
@@ -219,7 +223,9 @@ const refreshAccessToken = async (req, res) => {
       return res.status(200).json({message:"accessToken refreshed successfully"});
  
      } catch (error) {
-      return res.status(401).json({error:"Invalid refresh token"});
+      console.log("error in refreshAccessToken",error);
+      
+      return res.status(401).json({error:"Internal server error"});
      }
 };
 
@@ -241,21 +247,20 @@ const forgotPasswordRequest = async (req, res) => {
       user.forgotPasswordToken=hashedToken;
       user.forgotPasswordExpiry=tokenExpiry;
  
-      await user.save();
+      
  
       const username = user.username;
-      const passwordResetUrl = `${process.env.BASE_URL}/auth/resetPassword/${unhashedToken}`
+      const passwordResetUrl = `${process.env.BASE_URL}/api/v1/auth/resetPassword/${unhashedToken}`
  
       sendMail({
        email:user.email,
        subject:"Reset your password",
-       mailgenContent:forgotPasswordMailGenContent({
-         username,
-         passwordResetUrl,
-       })
+       mailGenContent:forgotPasswordMailGenContent( username,  passwordResetUrl)
       })
+
+      await user.save();
  
-      return res.status(200).json({message:"forgot password mail sent"});
+      return res.status(200).json({message:"forgot password mail sent",unhashedToken});
 
    } catch (error) {
     console.log("error in forgotpasswordrequest controller",error);
@@ -271,14 +276,16 @@ const resetForgotPassword = async(req,res)=>{
 
     const unhashedToken = req.params.unhashedToken;
 
-    const hashedToken = crypto.createHash("sha256")
-        .update(unhashedToken)
-        .digest("hex")
+const hashedToken =  crypto.createHash("sha256")
+            .update(unhashedToken)
+            .digest("hex")
 
-        const user = await User.findOne({
-          forgotPasswordToken:hashedToken,
-          forgotPasswordExpiry:{$gt:Date.now()}
-        })
+
+  const user = await User.findOne({
+      forgotPasswordToken: hashedToken,
+       forgotPasswordExpiry:{$gt:Date.now()},
+     })
+
 
         if(!user){
           return res.status(400).json({error:"invalid or expires token"});

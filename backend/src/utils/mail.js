@@ -32,7 +32,7 @@ const emailHTML = mailGenerator.generate(options.mailGenContent);
 
 
 const mail = {
-     from: '"m@m.com',
+     from: 'm@m.com',
     to:options.email,
     subject:options.subject,
     text: emailText, // plain‑text body
@@ -43,6 +43,7 @@ const mail = {
     await transporter.sendMail(mail)
   } catch (error) {
     console.error("email failed",error)
+    throw error;
   }
 
  }
