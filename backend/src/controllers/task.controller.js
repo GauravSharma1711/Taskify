@@ -86,7 +86,7 @@ try {
         // attachment:attachment.url,
         assignedTo,
         assignedBy,
-        projectId
+       project: projectId
         })
   
         await task.save();
@@ -117,8 +117,13 @@ const updateTask = async (req, res) => {
         return res.status(403).json({error:"you are not authorized to delete task"});
       }
 
-           task.title = title;
-      task.description = description;
+      if(task.title!=="undefined"){
+        task.title = title;
+      }
+      if(task.description!=="undefined"){
+        task.description = description;
+      }
+
 
       await task.save();
 

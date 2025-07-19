@@ -9,15 +9,15 @@ const getProjectsByMe = async (req, res) => {
       const userId = req.user.id;
       const user = await User.findById(userId);
 
-      const projects = await Project.find({
+      const myprojects = await Project.find({
         createdBy:userId
       })
 
-      if(!projects){
+      if(!myprojects){
         return res.status(404).json({error:"no project by this user"});
       }
 
-      return res.status(200).json({projects});
+      return res.status(200).json({myprojects});
 
 
     } catch (error) {
@@ -114,8 +114,13 @@ const updateProject = async (req, res) => {
     return res.status(403).json("you are not authorized to update this project");
   }
   
-    project.name = name;
-    project.description = description;
+     if (name !== undefined) {
+      project.name = name;
+    }
+
+    if (description !== undefined) {
+      project.description = description;
+    }
   
     await project.save();
 
@@ -145,7 +150,7 @@ const deleteProject = async (req, res) => {
     return res.status(403).json("you are not authorized to delete this project");
   }
     
-   const deletedProject = await Project.findByIdAndDelete(projectId);
+ await Project.findByIdAndDelete(projectId);
 
 
    return res.status(200).json({message:"project deleted successfully"});
@@ -163,7 +168,7 @@ const getProjectMembers = async (req, res) => {
   try {
 
     const projectId = req.params.projectId;
-    const project = Project.findById(projectId);
+    const project = await Project.findById(projectId);
     if(!project){
       return res.status(404).json({message:"Project not found"});
     }
@@ -178,7 +183,7 @@ const getProjectMembers = async (req, res) => {
       project:projectId
     })
 
-    if(!projectMembers){
+    if(projectMembers.length === 0){
       return res.status(404).json({error:"no member found"})
     }
 
@@ -202,7 +207,7 @@ const addMemberToProject = async (req, res) => {
             const projectId = req.params.projectId;
             const memberId = req.params.memberId;
 
-     const project = Project.findById(projectId);
+     const project = await Project.findById(projectId);
     if(!project){
       return res.status(404).json({message:"Project not found"});
     }
@@ -230,7 +235,7 @@ const newMember = await ProjectMember.create({
     role: role || UserRolesEnum.MEMBER,
 })
 
-
+return res.status(200).json({message:"member added",newMember})
 
 
             } catch (error) {
@@ -248,9 +253,9 @@ const deleteMember = async (req, res) => {
         const projectId = req.params.projectId;
       const project = await Project.findById(projectId);
 
-        const currentLoggedInUserId = req.user.Id;
+        const currentLoggedInUserId = req.user.id;
 
-        const projectMember = await ProjectMember.find({
+        const projectMember = await ProjectMember.findOne({
           user:memberId,
           project:projectId
         })
@@ -284,9 +289,9 @@ const updateMemberRole = async (req, res) => {
 
       const {role} = req.body;
 
-        const currentLoggedInUserId = req.user.Id;
+        const currentLoggedInUserId = req.user.id;
 
-        const projectMember = await ProjectMember.find({
+        const projectMember = await ProjectMember.findOne({
           user:memberId,
           project:projectId
         })

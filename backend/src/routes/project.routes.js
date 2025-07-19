@@ -11,14 +11,13 @@ router.get('/:projectId',protectRoute,getProjectById);
 
 router.post('/create',protectRoute,createProject);
 router.put('/:projectId',protectRoute,updateProject);
-
 router.delete('/:projectId',protectRoute,deleteProject);
 
 
-router.get('/:projectId/:memberId',protectRoute,getProjectMembers);
-router.post('/:projectId',protectRoute,addMemberToProject);
-router.put('/:projectId',protectRoute,updateMemberRole);
-router.delete('/:projectId/:memberId',protectRoute,deleteMember);
+router.get('/:projectId/n/:memberId',protectRoute,getProjectMembers);
+router.post('/:projectId/n/:memberId',protectRoute,addMemberToProject);
+router.put('/:projectId/n/:memberId',protectRoute,updateMemberRole);
+router.delete('/:projectId/n/:memberId',protectRoute,deleteMember);
 
 
 export default router

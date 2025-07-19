@@ -36,13 +36,17 @@ const getNotes = async (req, res) => {
 const getNoteById = async (req, res) => {
   
   try {
-    const noteId = req.params.id;
+    const noteId = req.params.noteId;
     const note = await Note.findById(noteId);
+  console.log("note",noteId);
   
       if(!note){
         return res.status(404).json({error:"Note with this id not found"});
       }
-  
+
+      if (note.createdBy.toString() !== req.user.id.toString()) {
+      return res.status(403).json({ error: "You are not authorized to view this note" });
+    }
       return res.status(200).json({note});
   
   } catch (error) {
@@ -96,7 +100,7 @@ const updateNote = async (req, res) => {
 
      const note = await Note.findById(noteId);
 
-    if(!note || note.project.toString() !== projectId){
+    if(!note || note.project.toString() !== projectId.toString()){
       return res.status(404).json({erorr:"Note not found"});
     }
 

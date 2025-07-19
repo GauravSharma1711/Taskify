@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
  
   await user.save();
  
-  return res.status(200).json({message:"Logged in successfully"});
+  return res.status(200).json({message:"Logged in successfully",user});
  
  } catch (error) {
   console.log("Error in loginUser:", error);
