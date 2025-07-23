@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
 
 import crypto from 'crypto'
+import {AvailableUserRoles,UserRoleEnum} from '../utils/constants.js'
 
 const userSchema = new mongoose.Schema({
 
@@ -41,6 +42,11 @@ password:{
    type:String,
    required:true,
 },
+ role:{
+       type:String,
+       enum:AvailableUserRoles,
+       default:UserRoleEnum.MEMBER
+     },
 isEmailVerified:{
    type:Boolean,
    default:false,
