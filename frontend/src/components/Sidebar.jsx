@@ -21,7 +21,7 @@ const Sidebar = () => {
            DashBoard
            </Link>
 
- <Link to={'/dashboard'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-base-200 justify-center gap-2' >
+ <Link to={'/myprojects'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-base-200 justify-center gap-2' >
            <GrProjects />
            MyProjects
            </Link>
@@ -45,7 +45,7 @@ const Sidebar = () => {
     tabIndex={0}
     className="dropdown-content menu bg-base-200 rounded-box z-10 w-52 p-2 shadow"
   >
-    <li><a>Profile</a></li>
+    <li><Link to={'/profile'}>Profile</Link></li>
     <li><a>Logout</a></li>
   </ul>
 </div>

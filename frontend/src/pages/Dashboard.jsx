@@ -4,13 +4,13 @@ import { IoCreateSharp } from "react-icons/io5";
 const Dashboard = () => {
   return (
     <div className=' bg-black min-h-screen w-full' >
-       <div className=' border-2 border-white p-4 flex flex-col items-start justify-center '>
+       <div className=' border-2 border-white p-4 flex flex-col items-center lg:items-start justify-center '>
            <h1 className=' font-bold text-2xl' >Projects Overview</h1>
            <p>Manage your project efficiently</p>
        </div>
 
 
-       <div className=' grid grid-rows-1 grid-cols-3 gap-2 p-8'>
+       <div className=' grid grid-rows-1 place-items-center lg:grid-cols-3  grid-cols-1 gap-4 p-8'>
            
     <div className='card bg-base-200 w-66 shadow-sm ' >
  <div className="card-body flex flex-col items-center justify-center">

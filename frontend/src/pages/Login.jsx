@@ -2,20 +2,20 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
-      <div className="w-full max-w-sm p-8 bg-slate-900 border border-slate-700 rounded-2xl shadow-lg flex flex-col gap-6">
+    <div className="min-h-screen bg-black flex items-center justify-center text-white">
+      <div className="w-full max-w-sm p-8 bg-base-200 border border-slate-700 rounded-2xl shadow-lg flex flex-col gap-6">
         <h1 className="text-3xl font-bold text-center text-slate-200">Login</h1>
 
         <input
           type="email"
           placeholder="Email"
-          className="input input-md input-bordered w-full rounded-lg border-slate-600 text-white bg-slate-800 placeholder-slate-400"
+          className="input input-md input-bordered w-full rounded-lg border-base-200 text-white bg-base-800 placeholder-slate-400"
         />
 
         <input
           type="password"
           placeholder="Password"
-          className="input input-md input-bordered w-full rounded-lg border-slate-600 text-white bg-slate-800 placeholder-slate-400"
+          className="input input-md input-bordered w-full rounded-lg border-base-200 text-white bg-base-800 placeholder-slate-400"
         />
 
         <button className="btn w-full bg-white text-black border border-[#e5e5e5] hover:bg-gray-100">
