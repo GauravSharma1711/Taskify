@@ -16,12 +16,12 @@ const Sidebar = () => {
 
         <div className=' flex flex-col items-center mt-4 gap-6'>
 
-          <Link to={'/dashboard'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-white/20 justify-center gap-2' >
+          <Link to={'/dashboard'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-base-200 justify-center gap-2' >
            <BiHomeAlt />
            DashBoard
            </Link>
 
- <Link to={'/dashboard'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-white/20 justify-center gap-2' >
+ <Link to={'/dashboard'} className=' text-[18px] flex px-12 py-3 rounded-sm  cursor-pointer items-center hover:bg-base-200 justify-center gap-2' >
            <GrProjects />
            MyProjects
            </Link>
@@ -43,7 +43,7 @@ const Sidebar = () => {
 
   <ul
     tabIndex={0}
-    className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow"
+    className="dropdown-content menu bg-base-200 rounded-box z-10 w-52 p-2 shadow"
   >
     <li><a>Profile</a></li>
     <li><a>Logout</a></li>
