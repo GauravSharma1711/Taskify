@@ -1,5 +1,6 @@
 import React from 'react'
-import { MdEdit } from "react-icons/md";
+import EditProfile from './EditProfile';
+
 const Profile = () => {
   return (
     <div className='bg-black min-h-screen w-full text-white font-sans'>
@@ -50,10 +51,7 @@ const Profile = () => {
       </div>
 
 
- <div className=' border-2  lg-w-full border-white p-2 rounded-md flex items-center justify-center cursor-pointer '>
-          <MdEdit />
-           <h3>Edit Profile</h3>         
-       </div>
+<EditProfile/>
 
 
     </div>

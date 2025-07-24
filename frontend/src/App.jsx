@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Layout from './layout/Layout'
 import MyProjects from './pages/MyProjects'
 import Profile from './pages/Profile'
+import Project from './components/Project'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/myprojects" element={<MyProjects />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/project" element={<Project/>} />
         {/* You can add more sidebar pages here */}
       </Route>
 

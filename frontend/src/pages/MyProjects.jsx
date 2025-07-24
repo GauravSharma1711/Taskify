@@ -14,7 +14,6 @@ const MyProjects = () => {
 
       <div className='grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
 
-     
     
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
@@ -64,6 +63,7 @@ const MyProjects = () => {
         </div>
 
       </div>
+      
     </div>
   );
 };
