@@ -1,4 +1,8 @@
 import React from 'react'
+import Bar from './Bar'
+import { Link } from 'react-router-dom'
+import TaskModal from '../modals/TaskModal'
+import NoteModal from '../modals/NoteModal'
 
 const Project = () => {
   return (
@@ -18,19 +22,19 @@ const Project = () => {
     <h2 className=' font-bold text-2xl'>Tasks</h2>
         </div>
         <div>
-    <button>Add Task</button>
+    <TaskModal/>
         </div>
     </div>
 
       <div className='grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
 
     
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
+        <Link to={'/task'} className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">Total</h2>
             <span className='font-bold text-5xl text-white'>7</span>
           </div>
-        </div>
+        </Link>
 
         
         <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
@@ -77,39 +81,18 @@ const Project = () => {
 
 
  <div className=' flex flex-col border-2 mx-4 my-4 border-white   ' >
-
 <div className=' p-2 flex items-center justify-between mx-4  '>
         <div>
     <h2 className=' font-bold text-2xl'>Notes</h2>
         </div>
         <div>
-    <button>Add Note</button>
+    <NoteModal/>
         </div>
     </div>
-
-        <div className='grid grid-cols-1 lg:grid-cols-3 place-items-center gap-4 p-8'>
-  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
-    <div className="card-body flex flex-col items-center justify-center">
-      <h2 className="card-title">Total</h2>
-      <span className='font-bold text-2xl'>7</span>
-    </div>
-  </div>
-
-  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
-    <div className="card-body flex flex-col items-center justify-center">
-      <h2 className="card-title">Completed</h2>
-      <span className='font-bold text-2xl'>4</span>
-    </div>
-  </div>
-
-  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
-    <div className="card-body flex flex-col items-center justify-center">
-      <h2 className="card-title">Remaining</h2>
-      <span className='font-bold text-2xl'>3</span>
-    </div>
-  </div>
-</div>
-
+<Bar/>
+<Bar/>
+<Bar/>
+<Bar/>
  </div>
 
 

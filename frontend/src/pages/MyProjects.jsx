@@ -1,6 +1,7 @@
 
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MyProjects = () => {
   return (
@@ -15,12 +16,12 @@ const MyProjects = () => {
       <div className='grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
 
     
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
+        <Link to={'/project'} className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">Total</h2>
             <span className='font-bold text-5xl text-white'>7</span>
           </div>
-        </div>
+        </Link>
 
         
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
