@@ -1,5 +1,7 @@
 import React from 'react'
-import { IoCreateSharp } from "react-icons/io5";
+import CreateProject from './CreateProject'
+
+
 
 const Dashboard = () => {
   return (
@@ -10,42 +12,31 @@ const Dashboard = () => {
        </div>
 
 
-       <div className=' grid grid-rows-1 place-items-center lg:grid-cols-3  grid-cols-1 gap-4 p-8'>
-           
-    <div className='card bg-base-200 w-66 shadow-sm ' >
- <div className="card-body flex flex-col items-center justify-center">
-    <h2 className="card-title">Total</h2>
-    <span className=' font-bold text-2xl'>7</span>
+      <div className='grid grid-cols-1 lg:grid-cols-3 place-items-center gap-4 p-8'>
+  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
+    <div className="card-body flex flex-col items-center justify-center">
+      <h2 className="card-title">Total</h2>
+      <span className='font-bold text-2xl'>7</span>
+    </div>
   </div>
-   </div>
 
-
-     <div className='card bg-base-200 w-66 shadow-sm ' >
- <div className="card-body flex flex-col items-center justify-center">
-    <h2 className="card-title">Completed</h2>
-    <span className=' font-bold text-2xl'>4</span>
+  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
+    <div className="card-body flex flex-col items-center justify-center">
+      <h2 className="card-title">Completed</h2>
+      <span className='font-bold text-2xl'>4</span>
+    </div>
   </div>
-   </div>
 
-
- <div className='card bg-base-200 w-66 shadow-sm ' >
- <div className="card-body flex flex-col items-center justify-center">
-    <h2 className="card-title">Remaining</h2>
-    <span className=' font-bold text-2xl'>3</span>
+  <div className='card bg-base-200 w-full max-w-xs shadow-sm'>
+    <div className="card-body flex flex-col items-center justify-center">
+      <h2 className="card-title">Remaining</h2>
+      <span className='font-bold text-2xl'>3</span>
+    </div>
   </div>
-   </div>
+</div>
 
 
-           
-           
-
-       </div>
-
-
-       <div className=' border-2 border-white p-2 rounded-md flex items-center justify-center cursor-pointer '>
-           <IoCreateSharp />
-           <h3>Create Project</h3>         
-       </div>
+     <CreateProject/>
 
     </div>
   )

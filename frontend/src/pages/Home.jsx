@@ -20,9 +20,9 @@ const Home = () => {
 <div>
   <h2 className=' flex items-center justify-center text-3xl'>Our Features</h2>
 </div>
-  <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ' >
+  <div className=' grid  grid-cols-1 md:grid-cols-2 sm:justify-items-center xl:place-items-start lg:grid-cols-4 ' >
 
-   <div className="card bg-base-200 text-neutral-content m-8 w-66">
+   <div className="card bg-base-200 text-neutral-content m-8 lg:w-56 w-66  ">
   <div className="card-body items-center text-center">
     <h2 className="card-title">Projects</h2>
     <p>create your own project with ease</p>
@@ -31,7 +31,7 @@ const Home = () => {
 
 
 
- <div className="card bg-base-200 text-neutral-content m-8 w-66">
+ <div className="card bg-base-200 text-neutral-content m-8 lg:w-56 w-66">
   <div className="card-body items-center text-center">
     <h2 className="card-title">Member</h2>
     <p>Add members to your project</p>
@@ -39,7 +39,7 @@ const Home = () => {
 </div>
   
 
-   <div className="card bg-base-200 text-neutral-content m-8 w-66">
+   <div className="card bg-base-200 text-neutral-content m-8 lg:w-56 w-66">
   <div className="card-body items-center text-center">
     <h2 className="card-title">Notes</h2>
     <p>Add notes in your project</p>
@@ -47,7 +47,7 @@ const Home = () => {
 </div>
   
 
- <div className="card bg-base-200 text-neutral-content m-8 w-66">
+ <div className="card bg-base-200 text-neutral-content m-8 lg:w-56 w-66">
   <div className="card-body items-center text-center">
     <h2 className="card-title">Tasks</h2>
     <p>Assign tasks and subtasks in your project</p>
