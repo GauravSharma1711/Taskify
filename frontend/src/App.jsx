@@ -11,12 +11,12 @@ import Project from './components/Project'
 import Task from './pages/Task'
 
  import { Toaster } from 'react-hot-toast';
- <Toaster position="top-right" reverseOrder={false} />
-
-const App = () => {
-  return (
-   
-    <Routes>
+ 
+ const App = () => {
+   return (
+     <>
+       <Toaster />
+     <Routes>
 
     <Route path='/' element={<Home/>} />
     <Route path='/login' element={<Login/>} />
@@ -32,7 +32,7 @@ const App = () => {
       </Route>
 
     </Routes>
-
+</>
   )
 }
 

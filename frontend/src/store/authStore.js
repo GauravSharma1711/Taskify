@@ -28,11 +28,13 @@ const useAuthStore = create(persist(
       try {
         set({ isLoggingIn: true });
         const res = await authService.login(data);
-        set({ authUser: res.data.user });
-        toast.success(res.data.message || 'Logged in successfully!');
+        set({ authUser: res.user });
+        toast.success(res.message || 'Logged in successfully!');
+        return res;
       } catch (error) {
         console.error("Error while logging in:", error);
-        toast.error(error?.response?.data?.error || 'Login failed');
+        toast.error('Login failed');
+        throw error
       } finally {
         set({ isLoggingIn: false });
       }
