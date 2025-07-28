@@ -4,8 +4,8 @@ import {protectRoute} from '../middlewares/auth.middleware.js'
 
 const router = express.Router()
 
-router.get('/',protectRoute,getProjectsByMe);
-router.get('/',protectRoute,getProjects);
+router.get('/me',protectRoute,getProjectsByMe);
+router.get('/all',protectRoute,getProjects);
 
 router.get('/:projectId',protectRoute,getProjectById);
 

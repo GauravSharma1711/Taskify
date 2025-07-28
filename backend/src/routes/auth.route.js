@@ -12,8 +12,6 @@ router.post('/login',userLoginValidator(),validate,loginUser);
 router.delete('/logout',protectRoute,logoutUser);
 
 router.get('/verify/:unhashedToken', verifyEmail);
-
-
 router.post('/resendEmailVerification',protectRoute,resendEmailVerification);
 
 router.post('/refreshAccessToken',refreshAccessToken);

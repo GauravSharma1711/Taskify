@@ -59,38 +59,39 @@ const registerUser = async(req,res)=>{
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  //validation
-  
- try {
-   const user = await User.findOne({email});
- 
-   if(!user){
-     return res.status(404).json({error:"User does not exist"});
-   }
- 
-   const isPasswordCorrect = await bcrypt.compare(password,user.password);
- 
- if(!isPasswordCorrect){
-   return res.status(403).json({error:"Unauthorized"});
- }
- 
-  const accessToken = await user.generateAccessToken();
-  const refreshToken = await user.generateRefreshToken();
- 
-  setCookie(res,accessToken,refreshToken);
- 
-  user.refreshToken  = refreshToken;
- 
-  await user.save();
- 
-  return res.status(200).json({message:"Logged in successfully",user});
- 
- } catch (error) {
-  console.log("Error in loginUser:", error);
-return res.status(500).json({ error: "Internal server error" });
+  try {
+    const user = await User.findOne({ email });
 
- }
+    if (!user) {
+      return res.status(404).json({ error: "User does not exist" });
+    }
 
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const accessToken = await user.generateAccessToken();
+    const newRefreshToken = await user.generateRefreshToken();
+
+    setCookie(res, accessToken, newRefreshToken);
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    // ✅ Omit password and refreshToken cleanly
+    const { password, refreshToken: _, ...safeUser } = user._doc;
+
+    return res.status(200).json({
+      message: "Logged in successfully",
+      user: safeUser,
+    });
+
+  } catch (error) {
+    console.log("Error in loginUser:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const logoutUser = async (req, res) => {
