@@ -36,6 +36,7 @@ const authService = {
         return res.data;
 
     },
+    
     changeCurrentPassword : async (data) =>{
         const res = await axiosInstance.post('/changeCurrentPassword',data);
         return res.data

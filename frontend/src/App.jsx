@@ -10,6 +10,8 @@ import Profile from './pages/Profile'
 import Project from './components/Project'
 import Task from './pages/Task'
 
+ import { Toaster } from 'react-hot-toast';
+ <Toaster position="top-right" reverseOrder={false} />
 
 const App = () => {
   return (
