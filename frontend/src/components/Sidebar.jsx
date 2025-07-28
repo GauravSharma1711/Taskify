@@ -3,8 +3,28 @@ import {Link} from 'react-router-dom'
 import { BiHomeAlt } from "react-icons/bi";
 import { GrProjects } from "react-icons/gr";
 import { CiSettings } from "react-icons/ci";
+import authStore from '../store/authStore.js'
+import { useNavigate } from 'react-router-dom';
+
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
+  const {logout} = authStore()
+
+  const handleLogout = ()=>{
+    try {
+    const res =   logout();
+    if(res){
+   navigate('/login');
+    }
+    } catch (error) {
+      console.log("error logging out",error);
+      
+    }
+  }
+
+
   return (
     <div className='flex flex-col items-center  min-h-screen w-48 text-white p-10 border-2 border-white-600'>
 
@@ -43,8 +63,22 @@ const Sidebar = () => {
     tabIndex={0}
     className="dropdown-content menu bg-base-200 rounded-box z-10 w-52 p-2 shadow"
   >
-    <li><Link to="/profile">Profile</Link></li>
-    <li><a>Logout</a></li>
+   
+
+    <li>
+      <Link
+        to="/profile"
+        className="text-sm text-left w-full hover:bg-base-300 rounded px-2 py-1"
+      >
+        Profile
+      </Link>
+    </li>
+
+  <li>
+      <button onClick={handleLogout} className="text-sm text-left w-full">
+        Logout
+      </button>
+    </li>
   </ul>
 </div>
 

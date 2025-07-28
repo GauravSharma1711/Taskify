@@ -1,9 +1,14 @@
 import React from 'react'
 import CreateProject from './CreateProject'
-
+import authStore from '../store/authStore';
 
 
 const Dashboard = () => {
+
+   const { authUser } = authStore();
+  if (!authUser) return <Navigate to="/login" />;
+
+
   return (
     <div className=' bg-black min-h-screen w-full' >
 

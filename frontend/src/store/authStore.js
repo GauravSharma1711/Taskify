@@ -44,12 +44,12 @@ const useAuthStore = create(persist(
 
     logout: async () => {
       try {
-        const res = await authService.logout();
+         await authService.logout();
         set({ authUser: null });
-        toast.success(res.data.message || 'Logged out successfully!');
+        toast.success('Logged out successfully!');
       } catch (error) {
         console.error("Error while logging out:", error);
-        toast.error(error?.response?.data?.error || 'Logout failed');
+        toast.error('Logout failed');
       }
     },
 

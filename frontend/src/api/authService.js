@@ -9,10 +9,12 @@ const authService = {
         
         return res.data;
     },
+    
     login : async(userData)=>{
         const res = await axiosInstance.post('/auth/login',userData);
         return res.data;
     },
+
     logout: async ()=>{
         const res = await axiosInstance.delete('/auth/logout');
         localStorage.removeItem(StorageKeys.ACCESS_TOKEN);
