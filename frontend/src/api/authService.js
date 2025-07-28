@@ -5,6 +5,8 @@ const authService = {
 
     register : async(userData) =>{
         const res = await axiosInstance.post('/auth/register',userData);
+       
+        
         return res.data;
     },
     login : async(userData)=>{

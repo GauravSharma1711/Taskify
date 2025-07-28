@@ -14,11 +14,13 @@ const useAuthStore = create(persist(
       try {
         set({ isSigningUp: true });
         const res = await authService.register(data);
-        set({ authUser: res.data.user });
-        toast.success(res.data.message || 'Signed up successfully!');
+        set({ authUser: res.user });
+        toast.success(res.message || 'Signed up successfully!');
+        return res;
       } catch (error) {
         console.error("Error while signing up:", error);
         toast.error(error?.response?.data?.error || 'Signup failed');
+        throw error
       } finally {
         set({ isSigningUp: false });
       }

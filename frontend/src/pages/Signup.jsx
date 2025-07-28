@@ -9,7 +9,7 @@ const SignUp = () => {
 
   const navigate  = useNavigate();
 
-  const {SignUp,isSigningUp} = useAuthStore();
+  const {signUp,isSigningUp} = useAuthStore();
 
 const [errorMsg,setErrorMsg] = useState('');
 
@@ -32,10 +32,11 @@ setFormData((prevData)=>({
   const handleSubmit = async(e)=>{
    try {
       e.preventDefault();
-      await SignUp(formData);
-      toast.success("Signed up successfully");
-      navigate('/login');
-
+      await signUp(formData);
+      const res = toast.success("Signed up successfully");
+      if(res){
+        navigate('/login');
+      }
    } catch (error) {
      const message = error.message || 'signup failed';
           setErrorMsg(message);          
@@ -93,8 +94,8 @@ setFormData((prevData)=>({
           <option value="" disabled hidden>
             Role
           </option>
-          <option value="Admin">Admin</option>
-          <option value="Member">Member</option>
+          <option value="admin">Admin</option>
+          <option value="member">Member</option>
         </select>
 
         <button
@@ -117,7 +118,7 @@ setFormData((prevData)=>({
   <span className="text-white">
     Already have an account?{' '}
     <Link className="text-gray-500 underline" to="/login">
-      Signup
+      Login
     </Link>
   </span>
 </div>
