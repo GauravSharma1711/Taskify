@@ -47,7 +47,7 @@ const registerUser = async(req,res)=>{
   
   await user.save();
 
-  return res.status(201).json({message:"User created Succesfully"});
+  return res.status(201).json({user,message:"User created Succesfully"});
 
 
   } catch (error) {
@@ -81,7 +81,7 @@ const loginUser = async (req, res) => {
     await user.save();
 
     // ✅ Omit password and refreshToken cleanly
-    const { password, refreshToken: _, ...safeUser } = user._doc;
+    const { password:_password, refreshToken: _, ...safeUser } = user._doc;
 
     return res.status(200).json({
       message: "Logged in successfully",
@@ -150,8 +150,6 @@ const verifyEmail = async (req, res) => {
 
 };
 
-
-
 const resendEmailVerification = async (req, res) => {
 
   try {
@@ -190,7 +188,6 @@ const resendEmailVerification = async (req, res) => {
   }
 
 };
-
 
 const refreshAccessToken = async (req, res) => {
    
