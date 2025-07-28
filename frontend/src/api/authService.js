@@ -28,7 +28,19 @@ const authService = {
     getCurrentUser : async ()=>{
         const res = await axiosInstance.get('/auth/currentUser');
         return res.data;
-    }
+    },
+
+
+    forgotPasswordRequest : async (email) =>{
+        const res = await axiosInstance.post('/forgotPassword',{email});
+        return res.data;
+
+    },
+    changeCurrentPassword : async (data) =>{
+        const res = await axiosInstance.post('/changeCurrentPassword',data);
+        return res.data
+    },
+
 
 }
 
