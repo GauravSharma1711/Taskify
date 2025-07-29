@@ -46,11 +46,17 @@ const getTaskById = async (req, res) => {
 
      const taskId = req.params.taskId;
      
-     const task = await Task.findById(taskId);
+     const task = await Task.findById(taskId)
+  
 
      if (task.assignedBy.toString() !== userId && task.assignedTo.toString() !== userId) {
       return res.status(403).json({ error: "Not authorized to view this task" });
     }
+
+   await task.populate([
+  { path: "assignedTo", select: "fullName" },
+  { path: "assignedBy", select: "fullName" }
+]);
 
 
      return res.status(200).json({task});
@@ -262,6 +268,25 @@ return res.status(200).json({message:"subtask deleted successfully"});
   
 };
 
+const getAllSubtasks = async (req,res)=>{
+  try {
+    
+    const taskId = req.params.taskId;
+
+  const allSubTasks = await Subtask.find({ task: taskId });
+
+    if(!allSubTasks){
+      return res.status(404).json({message:"no subrtask found"});
+    }
+    return res.status(200).json({allSubTasks})
+
+
+  } catch (error) {
+     console.log("error in  getAllSubtasks controller",error);
+    return res.status(500).json({error:"Internal server error"});
+  }
+}
+
 export {
   createSubTask,
   createTask,
@@ -271,4 +296,5 @@ export {
   getTasks,
   updateSubTask,
   updateTask,
+  getAllSubtasks
 };
