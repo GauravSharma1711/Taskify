@@ -80,7 +80,22 @@ const useAuthStore = create(persist(
         console.error("Error changing password:", error);
         toast.error('update failed');
       }
+    },
+
+    updateProfile: async (data)=>{
+      try {
+           const res = await authService.updateProfile(data);
+             set({ authUser: res.user });
+        toast.success(res.message || 'Profile updated successfully');
+        return res;
+
+      } catch (error) {
+          console.error("Error updating password:", error);
+        toast.error( error.message ||'update failed');
+      }
     }
+
+
   }),
   {
     name: 'auth-storage', // persist key in localStorage

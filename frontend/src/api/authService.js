@@ -36,11 +36,15 @@ const authService = {
     
     changeCurrentPassword : async (data) =>{
         const res = await axiosInstance.post('/auth/changeCurrentPassword',data);
-        console.log(res);
-        
         return res
     },
 
+    updateProfile : async (data)=>{
+         const res = await axiosInstance.post('/auth/updateProfile',data);
+     
+       
+        return res.data
+    }
 
 }
 

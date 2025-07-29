@@ -59,7 +59,7 @@ const Sidebar = () => {
     className="flex items-start justify-start gap-2 px-4 py-2 border border-white-600 rounded text-white hover:bg-white/20 cursor-pointer"
   >
     <CiSettings className="text-xl" />
-    <h2 className="text-[14px] whitespace-nowrap">{authUser.fullName}</h2>
+    <h2 className="text-[14px] whitespace-nowrap">{authUser?.fullName}</h2>
   </div>
 
   <ul

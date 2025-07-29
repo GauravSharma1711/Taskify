@@ -35,7 +35,7 @@ const Profile = () => {
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">username</h2>
-            <span className='font-bold text-2xl text-white'>{authUser.username}</span>
+            <span className='font-bold text-2xl text-white'>{authUser?.username}</span>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ const Profile = () => {
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-green-400 mb-2">email</h2>
-            <span className='font-bold text-2xl text-white'>{authUser.email}</span>
+            <span className='font-bold text-2xl text-white'>{authUser?.email}</span>
           </div>
         </div>
 
@@ -51,7 +51,7 @@ const Profile = () => {
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-red-400 mb-2">fullname</h2>
-            <span className='font-bold text-2xl text-white'>{authUser.fullName}</span>
+            <span className='font-bold text-2xl text-white'>{authUser?.fullName}</span>
           </div>
         </div>
 
@@ -59,7 +59,7 @@ const Profile = () => {
         <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-yellow-400 mb-2">role</h2>
-            <span className='font-bold text-2xl text-white'>{authUser.role}</span>
+            <span className='font-bold text-2xl text-white'>{authUser?.role}</span>
           </div>
         </div>
 
