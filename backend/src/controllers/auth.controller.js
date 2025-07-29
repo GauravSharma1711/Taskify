@@ -304,7 +304,7 @@ const hashedToken =  crypto.createHash("sha256")
 }
 
 const changeCurrentPassword = async (req, res) => {
-  const {password, newPassword } = req.body;
+  const {currentPassword, newPassword } = req.body;
 
     try {
         const user = await User.findById(req.user.id);
@@ -315,7 +315,7 @@ const changeCurrentPassword = async (req, res) => {
 
         const userPassword = user.password;
   
-        const isPasswordMatch = await bcrypt.compare(password,userPassword);
+        const isPasswordMatch = await bcrypt.compare(currentPassword,userPassword);
   
         if(!isPasswordMatch){
           return res.status(400).json({error:"Incorrect password"})
@@ -335,19 +335,56 @@ const changeCurrentPassword = async (req, res) => {
 };
 
 const getCurrentUser = async (req, res) => {
-  const user = req.user;
-
-  if(!user){
-    return res.status(401).json({error:"no user found please login"});
+  try {
+    const user = req.user;
+  
+    if(!user){
+      return res.status(401).json({error:"no user found please login"});
+    }
+  
+    const currentUser = await User.findById(req.user.id).select('-password -refreshToken');
+  
+  
+    return res.status(200).json({currentUser});
+  } catch (error) {
+    console.log("error getting current user",error.message);
+    return res.status(500).json({error:"Internal server error"});
+    
   }
-
-  const currentUser = await User.findById(req.user.id).select('-password -refreshToken');
-
-
-  return res.status(200).json({currentUser});
 };
 
+const updateProfile = async (req,res)=>{
+  try {
+    
+    const {username , fullName , email} = req.body;
+
+    if(!username && !fullName && !email){
+      return res.status(404).json({error:"No fields provided"});
+    }
+
+    const userId  = req.user.id;
+const user = await User.findById(userId);
+
+if(!user){
+ return res.status(404).json({ error: "User not found" });
+}
+
+     if (username) user.username = username;
+    if (email) user.email = email;
+    if (fullName) user.fullName = fullName;
+
+    await user.save();
+
+    return res.status(200).json({user , message:"user updated successfully"})
+
+  } catch (error) {
+     console.log("error updating user profile",error.message);
+    return res.status(500).json({error:"Internal server error"});
+  }
+}
+
 export {
+  updateProfile,
   changeCurrentPassword,
   forgotPasswordRequest,
   resetForgotPassword,
