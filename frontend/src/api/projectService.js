@@ -7,6 +7,7 @@ const projectService = {
         const res = await axiosInstance.get('/project/all');
          return res.data;
     },
+
     getProjectsByMe : async ()=>{
         const res = await axiosInstance.get('/project/me');
         return res.data

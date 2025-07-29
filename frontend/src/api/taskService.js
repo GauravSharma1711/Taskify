@@ -48,6 +48,11 @@ const taskService = {
     const res = await axiosInstance.delete(`/task/n/${subTaskId}`);
     return res.data;
   },
+
+  getAllSubtasks : async(taskId)=>{
+const res = await axiosInstance.get(`/task/s/${taskId}`);
+    return res.data;
+  }
 };
 
 export default taskService;

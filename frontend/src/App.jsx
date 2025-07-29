@@ -26,8 +26,8 @@ import Task from './pages/Task'
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/myprojects" element={<MyProjects />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/project" element={<Project/>} />
-          <Route path="/task" element={<Task/>} />
+        <Route path="/project/:projectId" element={<Project/>} />
+          <Route path="/task/:taskId" element={<Task/>} />
         {/* You can add more sidebar pages here */}
       </Route>
 

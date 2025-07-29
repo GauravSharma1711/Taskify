@@ -16,7 +16,7 @@ const useNoteStore = create((set, get) => ({
     try {
       set({ fetchingAllNotes: true });
       const res = await noteService.getAllNotes(projectId);
-      set({ allNotes: res.notes });
+      set({ allNotes: res.allNotes });
       toast.success(res.message || 'All notes fetched successfully');
     } catch (error) {
       console.error('Error while fetching all notes:', error);

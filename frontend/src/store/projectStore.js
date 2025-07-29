@@ -24,6 +24,7 @@ const useProjectStore = create((set, get) => ({
     try {
       const res = await projectService.getProjectsByMe();
       set({ myProjects: res.myprojects });
+      
     } catch (error) {
       toast.error("Failed to fetch my projects");
       console.error("fetchMyProjects error:", error);

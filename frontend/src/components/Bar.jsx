@@ -2,11 +2,11 @@ import React from 'react';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Update from '../modals/Update';
 
-const Bar = () => {
+const Bar = ({content}) => {
   return (
     <div className='flex justify-between py-2 my-2 mx-6 border-2 border-white bg-base-200'>
       <div className='m-2'>
-        <p>Some description here</p>
+        <p className=' text-white' >{content}</p>
       </div>
 
       {/* Action buttons: wrap both in buttons for consistency */}

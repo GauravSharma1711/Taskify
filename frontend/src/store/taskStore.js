@@ -8,28 +8,25 @@ const useTaskStore = create((set, get) => ({
   allSubtasks: [],
   task: null,
   subTask: null,
-  fetchingAllTasks: false,
+  
 
-  setProjectId: (id) => set({ projectId: id }),
 
-  getAllTasks: async (projectId = get().projectId) => {
+  getAllTasks: async (projectId) => {
     try {
-      set({ fetchingAllTasks: true });
       const res = await taskService.getTasks(projectId);
       set({ allTasks: res.tasks });
       toast.success('All tasks fetched');
     } catch (error) {
       console.error('Error getting all tasks', error);
       toast.error('Error getting all tasks');
-    } finally {
-      set({ fetchingAllTasks: false });
-    }
+    } 
   },
 
   getTaskById: async (taskId) => {
     try {
       const res = await taskService.getTaskById(taskId);
       set({ task: res.task });
+  
       toast.success('Task fetched');
     } catch (error) {
       console.error('Error getting task', error);
@@ -133,6 +130,20 @@ const useTaskStore = create((set, get) => ({
       toast.error('Error deleting subtask');
     }
   },
+
+  getAllSubTasks: async (taskId) => {
+    try {
+      const res = await taskService.getAllSubtasks(taskId);
+      set({ allSubtasks: res.allSubTasks });
+      
+      toast.success('All tasks fetched');
+    } catch (error) {
+      console.error('Error getting all tasks', error);
+      toast.error('Error getting all tasks');
+    } 
+  },
+
+
 }));
 
 export default useTaskStore;

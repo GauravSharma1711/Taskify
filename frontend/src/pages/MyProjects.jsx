@@ -1,10 +1,21 @@
 
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDelete } from "react-icons/md";
+import useProjectStore from '../store/projectStore';
 
 const MyProjects = () => {
+
+
+  const {fetchMyProjects,myProjects} = useProjectStore()
+
+useEffect(() => {
+  fetchMyProjects();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+
   return (
   
     <div className='bg-black min-h-screen w-full text-white font-sans'>
@@ -15,56 +26,25 @@ const MyProjects = () => {
       </div>
 
       <div className='grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
-
-    
-        <Link to={'/project'} className=' relative card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <span className=' absolute top-2 right-2 cursor-pointer' ><MdDelete size={22} /></span>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">Total</h2>
-            <span className='font-bold text-5xl text-white'>7</span>
-          </div>
-        </Link>
-
-        
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-green-400 mb-2">Completed</h2>
-            <span className='font-bold text-5xl text-white'>4</span>
-          </div>
-        </div>
-
-      
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-red-400 mb-2">Remaining</h2>
-            <span className='font-bold text-5xl text-white'>3</span>
-          </div>
-        </div>
-
-       
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-yellow-400 mb-2">In Progress</h2>
-            <span className='font-bold text-5xl text-white'>2</span>
-          </div>
-        </div>
-
-      
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-purple-400 mb-2">On Hold</h2>
-            <span className='font-bold text-5xl text-white'>1</span>
-          </div>
-        </div>
-
-       
-        <div className='card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-teal-400 mb-2">Archived</h2>
-            <span className='font-bold text-5xl text-white'>0</span>
-          </div>
-        </div>
-
+  {myProjects.map(project => (
+    <Link
+      key={project._id}
+      to={`/project/${project._id}`}
+      className='relative card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'
+    >
+      <span className='absolute top-2 right-2 cursor-pointer'>
+        <MdDelete size={22} />
+      </span>
+      <div className="card-body flex flex-col items-center justify-center p-6">
+        <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">
+          {project.name}
+        </h2>
+        <span className='font-bold text-2xl text-white'>
+          {project.description}
+        </span>
+      </div>
+    </Link>
+  ))}
       </div>
       
     </div>

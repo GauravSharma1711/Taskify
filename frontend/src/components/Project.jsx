@@ -1,19 +1,57 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Bar from './Bar'
 import { Link } from 'react-router-dom'
 import TaskModal from '../modals/TaskModal'
 import NoteModal from '../modals/NoteModal'
 import { MdDelete } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
+import useProjectStore from '../store/projectStore';
+import useTaskStore from '../store/taskStore'
+import useNoteStore from '../store/noteStore'
+import { useParams } from 'react-router-dom';
 
 const Project = () => {
+
+    const { projectId } = useParams();
+
+    const {selectedProject,fetchProjectById} = useProjectStore();
+    const {getAllTasks,allTasks} = useTaskStore();
+    const {allNotes,getAllNotes} = useNoteStore();
+
+    useEffect(() => {
+    fetchProjectById(projectId);
+    }, [fetchProjectById,projectId])
+
+    useEffect(() => {
+  getAllTasks(projectId);
+}, [getAllTasks, projectId]);
+
+  useEffect(() => {
+ getAllNotes(projectId)
+}, [getAllNotes,projectId])
+
+
+    
+
   return (
     <div className=' flex flex-col gap-4 bg-base-300 w-full  h-[540px] overflow-y-scroll ' >
 
 
-   <div className=' flex flex-col gap-2 px-8 py-4 m-4' >
-    <h1 className=' font-bold text-2xl' >Project Name</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+  <div className=' flex justify-between px-8 py-4 m-4' >
+    <div className=' flex flex-col gap-2'>
+    <h1 className=' font-bold text-3xl' >{selectedProject?.name}</h1>
+    <p className=' font-light text-2xl' >{selectedProject?.description}</p>
+    </div>
+    <div className=' flex items-center gap-2'>
+    {
+      selectedProject?.isCompleted ? 
+      (<div className="badge badge-success">Completed</div>) 
+      :
+       (<div className="badge badge-error">Not Completed</div>)
+    }
+       
+        
+    </div>
    </div>
 
 <div className='flex '>
@@ -34,54 +72,25 @@ const Project = () => {
 
       <div className='grid grid-cols-1 place-items-center lg:grid-cols-2  gap-6 p-8'>
 
-    
-        <Link to={'/task'} className=' relative card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
+{
+
+allTasks?.map((task)=>(
+ <Link
+  key={task?._id}
+   to={`/task/${task._id}`} 
+   className=' relative card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
           <span className=' absolute top-2 right-2 cursor-pointer' ><MdDelete size={22} /></span>
           <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">Total</h2>
-            <span className='font-bold text-5xl text-white'>7</span>
+            <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">{task?.title}</h2>
+            <span className='font-bold text-1xl text-white'>{task?.description}</span>
           </div>
         </Link>
+)
+)
 
-        
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-green-400 mb-2">Completed</h2>
-            <span className='font-bold text-5xl text-white'>4</span>
-          </div>
-        </div>
-
-      
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-red-400 mb-2">Remaining</h2>
-            <span className='font-bold text-5xl text-white'>3</span>
-          </div>
-        </div>
-
+}
+    
        
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-yellow-400 mb-2">In Progress</h2>
-            <span className='font-bold text-5xl text-white'>2</span>
-          </div>
-        </div>
-
-      
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-purple-400 mb-2">On Hold</h2>
-            <span className='font-bold text-5xl text-white'>1</span>
-          </div>
-        </div>
-
-       
-        <div className='card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <div className="card-body flex flex-col items-center justify-center p-6">
-            <h2 className="card-title text-xl font-semibold text-teal-400 mb-2">Archived</h2>
-            <span className='font-bold text-5xl text-white'>0</span>
-          </div>
-        </div>
 
       </div>
    </div>
@@ -95,10 +104,13 @@ const Project = () => {
     <NoteModal/>
         </div>
     </div>
-<Bar/>
-<Bar/>
-<Bar/>
-<Bar/>
+    {
+      allNotes.map(note=>{
+       return <Bar key={note._id} content={note.content} />
+ })
+    }
+
+
  </div>
 
 </div>
