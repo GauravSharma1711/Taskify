@@ -35,8 +35,10 @@ const authService = {
     },
     
     changeCurrentPassword : async (data) =>{
-        const res = await axiosInstance.post('/changeCurrentPassword',data);
-        return res.data
+        const res = await axiosInstance.post('/auth/changeCurrentPassword',data);
+        console.log(res);
+        
+        return res
     },
 
 

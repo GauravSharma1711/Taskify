@@ -56,7 +56,7 @@ const useAuthStore = create(persist(
     getCurrentUser: async () => {
       try {
         const res = await authService.getCurrentUser();
-        set({ authUser: res.data.user });
+        set({ authUser: res.currentUser });
       } catch (error) {
         console.error("Error fetching current user:", error);
       }
@@ -75,10 +75,10 @@ const useAuthStore = create(persist(
     changeCurrentPassword: async (data) => {
       try {
         const res = await authService.changeCurrentPassword(data);
-        toast.success(res.data.message || 'Password changed successfully');
+        toast.success(res.message || 'Password changed successfully');
       } catch (error) {
         console.error("Error changing password:", error);
-        toast.error(error?.response?.data?.error || 'Change failed');
+        toast.error('update failed');
       }
     }
   }),
