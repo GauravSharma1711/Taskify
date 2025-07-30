@@ -225,8 +225,9 @@ const updateSubTask = async (req, res) => {
       return res.status(403).json("not authorized to update subtask");
       }
   
-       subtask.title=title;
-      subtask.isCompleted=isCompleted;
+      if (title !== undefined) subtask.title = title;
+     if (isCompleted !== undefined) subtask.isCompleted = isCompleted;
+
   
       await subtask.save();
   

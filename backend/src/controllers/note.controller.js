@@ -61,6 +61,8 @@ const createNote = async (req, res) => {
   try {
     const {content} =  req.body;
     const projectId = req.params.projectId;
+    
+    
   const curLoggedInUser = req.user.id;
 
     const project = await Project.findById(projectId);
@@ -78,6 +80,9 @@ const createNote = async (req, res) => {
       createdBy:curLoggedInUser,
     })
 
+    
+    
+    
     await note.save();
 
     return res.status(200).json({message:"note created successfully",note})
@@ -94,11 +99,14 @@ const updateNote = async (req, res) => {
   try {
     
     const {content} = req.body;
+
     const { projectId, noteId } = req.params;
+
 
     const currentLoggedInUser = req.user.id;
 
      const note = await Note.findById(noteId);
+
 
     if(!note || note.project.toString() !== projectId.toString()){
       return res.status(404).json({erorr:"Note not found"});
@@ -111,6 +119,8 @@ const updateNote = async (req, res) => {
      note.content = content;
      await note.save();
 
+    
+     
 
       return res.status(200).json({message:"note updated successfully",note})
 
