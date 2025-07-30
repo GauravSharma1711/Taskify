@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Bar from './Bar'
+import NoteBar from './NoteBar.jsx'
 import { Link } from 'react-router-dom'
 import TaskModal from '../modals/TaskModal'
 import NoteModal from '../modals/NoteModal'
@@ -9,9 +9,11 @@ import useProjectStore from '../store/projectStore';
 import useTaskStore from '../store/taskStore'
 import useNoteStore from '../store/noteStore'
 import { useParams } from 'react-router-dom';
+import useNoteActions from '../hooks/deleteNote.js'
 
 const Project = () => {
 
+  const {handleDeleteNote} = useNoteActions()
     const { projectId } = useParams();
 
     const {selectedProject,fetchProjectById} = useProjectStore();
@@ -101,12 +103,16 @@ allTasks?.map((task)=>(
     <h2 className=' font-bold text-2xl'>Notes</h2>
         </div>
         <div>
-    <NoteModal/>
+    <NoteModal projectId={projectId} />
         </div>
     </div>
     {
       allNotes.map(note=>{
-       return <Bar key={note._id} content={note.content} />
+       return <NoteBar 
+       key={note._id}
+       note={note}
+        onDelete={(noteId) => handleDeleteNote(noteId, projectId)}
+          />
  })
     }
 

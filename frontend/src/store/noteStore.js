@@ -61,6 +61,8 @@ const useNoteStore = create((set, get) => ({
     try {
       set({ updatingNote: true });
       const res = await noteService.updateNote(projectId, noteId, noteData);
+      console.log(res);
+      
       set({ note: res.note, noteId: res.note._id }); // <-- update noteId again
 
       // Refresh all notes after update

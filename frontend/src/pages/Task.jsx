@@ -1,14 +1,19 @@
 import React from 'react'
-import Bar from '../components/Bar'
+import SubTaskBar from '../components/SubTaskBar.jsx'
 import SubtaskModal from '../modals/SubtaskModal'
-import Update from '../modals/Update'
+// import UpdateTask from '../modals/UpdateTask.jsx'
 import useTaskStore from '../store/taskStore.js'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import useSubtaskActions from '../hooks/deleteSubtask.js'
 
 const Task = () => {
 
+  const {handleDeleteSubtask} = useSubtaskActions()
+
   const {getAllSubTasks,allSubtasks, task,getTaskById} = useTaskStore();
+
+
 
 const {taskId} = useParams();
 
@@ -30,7 +35,7 @@ const {taskId} = useParams();
      <p className='text-sm text-gray-400 mt-1'>Assigned to: <span className='font-medium text-white'>John Doe</span></p>
     </div>
     <div className=' flex items-center gap-2'>
-         <Update/>
+         {/* <UpdateTask/> */}
         <div className="badge badge-success">{task?.status}</div>
         
     </div>
@@ -43,13 +48,19 @@ const {taskId} = useParams();
     <h2 className=' font-bold text-2xl'>Subtask</h2>
         </div>
         <div>
-   <SubtaskModal/>
+   <SubtaskModal taskId={taskId} />
         </div>
     </div>
 
     {
       allSubtasks.map((subtask)=>(
-           <Bar key={subtask._id} content={subtask.title} />
+           <SubTaskBar
+              key={subtask._id}
+              subtask={subtask}
+              content={subtask.title}
+            onDelete={(subTaskId) => handleDeleteSubtask(subTaskId, taskId)}
+              
+              />
       ))
     }
 

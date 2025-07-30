@@ -12,12 +12,17 @@ const noteService = {
            return res.data;
     },
 
-    createNote  : async (noteData,projectId) =>{
+    createNote  : async (projectId,noteData) =>{
         const res = await axiosInstance.post(`/note/${projectId}`,noteData);
-   return res.data;
+         return res.data;
     },
+    
 updateNote  : async (projectId,noteId,updatedData) =>{
+   
     const res = await axiosInstance.put(`/note/${projectId}/n/${noteId}`,updatedData);
+
+
+
  return res.data;
 },
 deleteNote  : async (id) =>{

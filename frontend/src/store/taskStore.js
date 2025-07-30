@@ -86,10 +86,7 @@ const useTaskStore = create((set, get) => ({
     try {
       const res = await taskService.createSubTask(taskId, subTaskData);
       set({ subTask: res.subTask });
-
-      const projectId = get().projectId;
-      if (projectId) await get().getAllTasks(projectId);
-
+     await  get().getAllSubTasks(taskId)
       toast.success('Subtask created');
     } catch (error) {
       console.error('Error creating subtask', error);
@@ -99,12 +96,17 @@ const useTaskStore = create((set, get) => ({
 
   updateSubTask: async (subTaskId, updatedData) => {
     try {
+     console.log("Calling updateSubTask with ID:", subTaskId, "Data:", updatedData);
+    
       const res = await taskService.updateSubTask(subTaskId, updatedData);
-      set({ subTask: res.subTask });
+       const updatedSubtask = res.subtask;
 
-      const projectId = get().projectId;
-      if (projectId) await get().getAllTasks(projectId);
-
+    set((state) => ({
+      allSubtasks: state.allSubtasks.map((subtask) =>
+        subtask._id === subTaskId ? updatedSubtask : subtask
+      )
+      }));
+      
       toast.success('Subtask updated');
     } catch (error) {
       console.error('Error updating subtask', error);
@@ -120,10 +122,6 @@ const useTaskStore = create((set, get) => ({
       set((state) => ({
         allSubtasks: state.allSubtasks.filter(st => st._id !== subTaskId)
       }));
-
-      const projectId = get().projectId;
-      if (projectId) await get().getAllTasks(projectId);
-
       toast.success('Subtask deleted');
     } catch (error) {
       console.error('Error deleting subtask', error);

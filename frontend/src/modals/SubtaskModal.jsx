@@ -1,6 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const SubtaskModal = () => {
+import useTaskStore from '../store/taskStore.js'
+
+const SubtaskModal = ({taskId}) => {
+
+  const {createSubTask} = useTaskStore();
+
+  const[formData,setFormData] = useState({
+        title:''
+  })
+
+  const handleChange = (e)=>{
+const {name,value} = e.target
+setFormData((prevData)=>({
+  ...prevData,
+  [name]:value
+}))
+  }
+
+  const handleSubmit = async(e)=>{
+    try {
+      e.preventDefault();
+   await createSubTask(taskId,formData);
+   setFormData({ title: '' });
+document.getElementById('add_subtask_modal').close();
+
+    } catch (error) {
+      console.log("error addding subtask",error.message);
+    }
+  }
+
+
   return (
     <>
          <button
@@ -21,11 +51,16 @@ const SubtaskModal = () => {
      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
    </form>
    
-             <form method="dialog" className="flex flex-col gap-4">
+             <form
+             onSubmit={handleSubmit}
+             method="dialog" className="flex flex-col gap-4">
    
               
                  <input
                  type="text"
+                 name='title'
+                 value={formData.title}
+                 onChange={handleChange}
                  placeholder="Title"
                  className="input input-bordered focus:outline-none w-full"    
                />

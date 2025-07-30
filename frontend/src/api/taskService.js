@@ -39,7 +39,11 @@ const taskService = {
 
 
   updateSubTask: async (subTaskId, updatedData) => {
+    console.log("bbb");
+    
     const res = await axiosInstance.put(`/task/n/${subTaskId}`, updatedData);
+    console.log(res);
+    
     return res.data;
   },
 

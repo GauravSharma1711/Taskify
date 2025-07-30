@@ -1,19 +1,27 @@
 import React from 'react';
 import { MdDelete, MdEdit } from "react-icons/md";
-import Update from '../modals/Update';
 
-const Bar = ({content}) => {
+import UpdateNote from '../modals/UpdateNote';
+
+const NoteBar = ({note,onDelete}) => {
+
+  
+
   return (
     <div className='flex justify-between py-2 my-2 mx-6 border-2 border-white bg-base-200'>
       <div className='m-2'>
-        <p className=' text-white' >{content}</p>
+        <p className=' text-white' >{note.content}</p>
       </div>
 
       {/* Action buttons: wrap both in buttons for consistency */}
       <div className='flex gap-2 items-center m-2'>
-        <Update />
+        <UpdateNote
+            note={note}
+         />
 
-        <button className='p-2 rounded-md flex items-center justify-center cursor-pointer hover:bg-base-300'>
+        <button
+          onClick={() => onDelete(note._id)}
+        className='p-2 rounded-md flex items-center justify-center cursor-pointer hover:bg-base-300'>
           <MdDelete size={18} />
         </button>
       </div>
@@ -21,4 +29,4 @@ const Bar = ({content}) => {
   );
 };
 
-export default Bar;
+export default NoteBar;

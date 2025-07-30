@@ -1,6 +1,37 @@
 import React from 'react'
+import {useState} from 'react'
+import useNoteStore from '../store/noteStore.js'
 
-const NoteModal = () => {
+const NoteModal = ({projectId}) => {
+
+  const {createNote} = useNoteStore();
+
+  
+  const[formData,setFormData] = useState({
+        content:''
+  })
+
+  const handleChange = (e)=>{
+const {name,value} = e.target
+setFormData((prevData)=>({
+  ...prevData,
+  [name]:value
+}))
+  }
+
+  const handleSubmit = async(e)=>{
+    try {
+      e.preventDefault();
+   await createNote(projectId,formData);
+   setFormData({ content: '' });
+document.getElementById('add_note_modal').close();
+
+    } catch (error) {
+      console.log("error addding subtask",error.message);
+    }
+  }
+
+
   return (
     <>
          <button
@@ -21,13 +52,18 @@ const NoteModal = () => {
      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
    </form>
    
-             <form method="dialog" className="flex flex-col gap-4">
+             <form 
+             onSubmit={handleSubmit}
+             method="dialog" className="flex flex-col gap-4">
    
              
               
    
        <input
                  type="text"
+                 name='content'
+                 value={formData.content}
+                 onChange={handleChange}
                  placeholder="Content"
                  className="input input-bordered focus:outline-none w-full"       
                />
