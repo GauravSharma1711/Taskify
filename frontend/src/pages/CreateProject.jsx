@@ -1,11 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoCreateSharp } from "react-icons/io5";
 
+import useProjectStore from '../store/projectStore.js';
+import { useNavigate } from 'react-router-dom';
+
 const CreateProject = () => {
+
+  const navigate = useNavigate();
+
+    const {createProject} = useProjectStore();
+
+    const [formData , setFormData] = useState({
+      name:'',
+      description:'',
+    })
+
+    const handleChange = (e)=>{
+      const {name,value} = e.target
+      setFormData((prevData)=>({
+        ...prevData,
+        [name]:value
+      })
+)
+    }
+
+    const handleSubmit = async(e)=>{
+      try {
+        e.preventDefault();
+await createProject(formData);
+document.getElementById('create_project_modal').close()
+setFormData({
+  name:'',
+  description:''
+})
+navigate('/myprojects')
+      } catch (error) {
+         console.log("error creating project",error.message);
+      }
+    }
+
+
+
   return (
     <>
       {/* Trigger Button */}
       <button
+
         className='w-full border-2 border-white p-2 rounded-md flex items-center justify-center gap-2 cursor-pointer'
         onClick={() => document.getElementById('create_project_modal').showModal()}
       >
@@ -24,15 +64,26 @@ const CreateProject = () => {
 
 
 
-          <form method="dialog" className="flex flex-col gap-4">
+          <form 
+          onSubmit={handleSubmit}
+          method="dialog" className="flex flex-col gap-4">
+
             <input
               type="text"
+              name='name'
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Project Name"
               className="input input-bordered focus:outline-none  
  w-full"
               required
             />
+
+
             <textarea
+            name='description'
+            value={formData.description}
+            onChange={handleChange}
               placeholder="Project Description"
               className="textarea textarea-bordered focus:outline-none 
  w-full"

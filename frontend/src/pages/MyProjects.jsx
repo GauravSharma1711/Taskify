@@ -8,7 +8,7 @@ import useProjectStore from '../store/projectStore';
 const MyProjects = () => {
 
 
-  const {fetchMyProjects,myProjects} = useProjectStore()
+  const {fetchMyProjects,myProjects,deleteProject} = useProjectStore()
 
 useEffect(() => {
   fetchMyProjects();
@@ -33,7 +33,15 @@ useEffect(() => {
       className='relative card bg-base-200 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'
     >
       <span className='absolute top-2 right-2 cursor-pointer'>
-        <MdDelete size={22} />
+        <MdDelete 
+        
+        onClick={(e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          deleteProject(project._id)
+        }}
+        
+        size={22} />
       </span>
       <div className="card-body flex flex-col items-center justify-center p-6">
         <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">
