@@ -10,12 +10,14 @@ import useTaskStore from '../store/taskStore'
 import useNoteStore from '../store/noteStore'
 import { useParams } from 'react-router-dom';
 import useNoteActions from '../hooks/deleteNote.js'
+import useAuthStore from '../store/authStore.js'
 
 const Project = () => {
 
   const {handleDeleteNote} = useNoteActions()
     const { projectId } = useParams();
 
+    const {getAllUsers,allUsers} = useAuthStore();
     const {selectedProject,fetchProjectById} = useProjectStore();
     const {getAllTasks,allTasks, deleteTask } = useTaskStore();
     const {allNotes,getAllNotes} = useNoteStore();
@@ -31,6 +33,10 @@ const Project = () => {
   useEffect(() => {
  getAllNotes(projectId)
 }, [getAllNotes,projectId])
+
+useEffect(() => {
+ getAllUsers()
+}, [getAllUsers,allUsers])
 
 
     
@@ -132,47 +138,34 @@ allTasks?.map((task)=>(
 {/* right */}
 <div className='w-1/3 m-2 flex flex-col' >
  
+
  <div className='flex  flex-col items-center border-2 mx-2 my-4  border-white'  >
   <h3 className=' text-2xl py-2' >Members</h3>
-            <div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
+   
+    <div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
                   <span>gaurav sharma</span>
-                  <MdDelete />
+                  <MdDelete className="cursor-pointer" />
             </div>
 
-<div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
-                  <span>gaurav sharma</span>
-                  <MdDelete />
+                 
             </div>
-
-            <div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
-                  <span>gaurav sharma</span>
-                  <MdDelete />
-            </div>
-
- </div>
-
  
 
 
 
-
-
- <div className='flex flex-col items-center border-2 mx-4 my-4  border-white'  >
-<h3 className=' text-2xl py-2' > Add Members</h3>
-            <div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
-                  <span>gaurav sharma</span>
-                  <IoMdAdd />
-            </div>
-
-<div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
-                  <span>gaurav sharma</span>
-                  <IoMdAdd />
-            </div>
-
-            <div className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
-                  <span>gaurav sharma</span>
-                 <IoMdAdd />
-            </div>
+{/* add members */}
+ <div className='flex  flex-col items-center border-2 mx-2 my-4  border-white'  >
+  <h3 className=' text-2xl py-2' >Add Members</h3>
+            {
+  allUsers.map(user => (
+    <div
+     key={user._id  }
+      className=' w-72 flex px-2  py-2 my-2 mx-2 items-center justify-between bg-slate-950 border-2  rounded-md'>
+      <span className="text-white">{user.fullName}</span>
+      <IoMdAdd className="cursor-pointer" />
+    </div>
+  ))
+}
  </div>
 
 

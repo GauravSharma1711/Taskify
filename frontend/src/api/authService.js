@@ -44,6 +44,11 @@ const authService = {
      
        
         return res.data
+    },
+
+    getAllUsers  : async ()=>{
+        const res = await axiosInstance.get('/auth/all');
+        return res.data;
     }
 
 }

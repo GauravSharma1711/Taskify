@@ -9,6 +9,7 @@ const useAuthStore = create(persist(
     isLoggingIn: false,
     isCheckingAuth: false,
     authUser: null,
+    allUsers:[],
 
     signUp: async (data) => {
       try {
@@ -92,6 +93,16 @@ const useAuthStore = create(persist(
       } catch (error) {
           console.error("Error updating password:", error);
         toast.error( error.message ||'update failed');
+      }
+    },
+
+    getAllUsers : async ()=>{
+      try {
+         const res = await authService.getAllUsers();
+         set({ allUsers: res.filteredUsers });
+         return res;
+      } catch (error) {
+          console.error("Error geting all users:", error);
       }
     }
 
