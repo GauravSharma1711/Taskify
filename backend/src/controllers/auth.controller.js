@@ -5,6 +5,7 @@ import {emailVerificationMailGenContent,forgotPasswordMailGenContent} from '../u
 import { setCookie } from "../utils/setCookie.js";
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto';
+import { error } from "console";
 
 
 const registerUser = async(req,res)=>{
@@ -381,9 +382,35 @@ if(!user){
      console.log("error updating user profile",error.message);
     return res.status(500).json({error:"Internal server error"});
   }
+};
+
+const getAllUsers = async (req,res)=>{
+  try {
+         const allUsers = await User.find({});
+
+         const loggedUserId = req.user.id;
+         const user = await User.findById(loggedUserId);
+
+         if(!user){
+          return res.status(404).json({message:"no user found"})
+         }
+
+       const  filteredUsers = allUsers.filter(u=>u._id.toString()!==loggedUserId.toString());
+
+         if(!filteredUsers || filteredUsers.length===0){
+          return res.status(404).json({message:"no other user found"});
+         }
+
+         return res.status(200).json({filteredUsers})
+
+  } catch (error) {
+    console.log("error in getAllUsers",error);
+    return res.status(500).json({error:"Internal server error"});
+  }
 }
 
 export {
+  getAllUsers,
   updateProfile,
   changeCurrentPassword,
   forgotPasswordRequest,

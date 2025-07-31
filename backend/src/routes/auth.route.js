@@ -1,5 +1,5 @@
 import express from 'express'
-import { changeCurrentPassword,updateProfile, forgotPasswordRequest, getCurrentUser, loginUser, logoutUser, refreshAccessToken, registerUser, resendEmailVerification, resetForgotPassword, verifyEmail } from '../controllers/auth.controller.js';
+import { changeCurrentPassword,updateProfile, forgotPasswordRequest, getCurrentUser, loginUser, logoutUser, refreshAccessToken, registerUser, resendEmailVerification, resetForgotPassword, verifyEmail,getAllUsers } from '../controllers/auth.controller.js';
 import {validate} from '../middlewares/validator.middleware.js'
 import {userLoginValidator, userRegistrationValidator } from '../validators/auth.js'
 
@@ -24,6 +24,8 @@ router.post('/changeCurrentPassword',protectRoute,changeCurrentPassword);
 router.get('/currentUser',protectRoute,getCurrentUser);
 
 router.post('/updateProfile',protectRoute,updateProfile)
+
+router.get('/all',protectRoute,getAllUsers);
 
 
 export default router
