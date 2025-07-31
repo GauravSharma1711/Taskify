@@ -34,7 +34,11 @@ const TaskModal = () => {
                  className="input input-bordered focus:outline-none w-full"    
                />
    
-   
+                <input
+                 type="text"
+                 placeholder="AssignedTo"
+                 className="input input-bordered focus:outline-none w-full"    
+               />
       
    
                <div className="modal-action">

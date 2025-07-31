@@ -17,7 +17,7 @@ const Project = () => {
     const { projectId } = useParams();
 
     const {selectedProject,fetchProjectById} = useProjectStore();
-    const {getAllTasks,allTasks} = useTaskStore();
+    const {getAllTasks,allTasks, deleteTask } = useTaskStore();
     const {allNotes,getAllNotes} = useNoteStore();
 
     useEffect(() => {
@@ -68,7 +68,7 @@ const Project = () => {
     <h2 className=' font-bold text-2xl'>Tasks</h2>
         </div>
         <div>
-    <TaskModal/>
+    <TaskModal  />
         </div>
     </div>
 
@@ -81,7 +81,14 @@ allTasks?.map((task)=>(
   key={task?._id}
    to={`/task/${task._id}`} 
    className=' relative card bg-base-100 w-full rounded-lg shadow-lg transform transition-transform hover:scale-105'>
-          <span className=' absolute top-2 right-2 cursor-pointer' ><MdDelete size={22} /></span>
+          <span
+          onClick={(e)=>{
+            e.preventDefault();
+            e.stopPropagation();
+            deleteTask(task._id)
+          }}
+          className='absolute top-2 right-2 cursor-pointer' ><MdDelete size={22} /></span>
+
           <div className="card-body flex flex-col items-center justify-center p-6">
             <h2 className="card-title text-xl font-semibold text-blue-400 mb-2">{task?.title}</h2>
             <span className='font-bold text-1xl text-white'>{task?.description}</span>
@@ -97,6 +104,7 @@ allTasks?.map((task)=>(
       </div>
    </div>
 
+{/* note */}
  <div className=' flex flex-col border-2 mx-4 my-4  border-white   ' >
 <div className=' p-2 flex items-center justify-between mx-4  '>
         <div>
